@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Shipper = sequelize.define('Shipper', {
-    name: { type: DataTypes.STRING, field: 'name' },
+    username: { type: DataTypes.STRING, field: 'username' },
+    password: { type: DataTypes.STRING, field: 'password' },
     email: { type: DataTypes.STRING, field: 'email' },
     address: { type: DataTypes.STRING, field: 'address' },
     isActived: { type: DataTypes.BOOLEAN, field: 'is_actived' },
