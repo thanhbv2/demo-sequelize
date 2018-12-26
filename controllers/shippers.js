@@ -1,19 +1,43 @@
-var express = require('express');
-var router = express.Router();
 const db = require('../models');
-/* GET users listing. */
-router.get('/', async (req, res, next) => {
-  try {
-    let { currentPage, pageSize, limit } = req.query;
-    let offset = (currentPage - 1) * limit;
+const ShipperService = require('../services/ShipperService');
 
-    const result = await db.Shipper.findAll({ limit, offset });
-    res.status(200).json({ httpCode: 200, result });
-  } catch (error) {
-    throw Error(error.message)
+class ShipperRoute {
+  constructor() {
+    this.instance;
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      return this.instance = new ShipperRoute();
+    }
+    return this.instance;
+  }
+
+  registerRoute(router) {
+    return router
+      .get('/shippers', this.get)
+      .post('/shippers', this.create)
+      // .put('/shippers/:id', this.update)
+  }
+
+  async get(req, res, next) {
+    res.status(200).json({ message: "hello" })
+  }
+
+  // validation = {status: false, failures: [{field: 'username', message: 'nhap username'}]}
+  // validation = {status: true, failures: []}
+
+  async create(req, res, next) {
+    const data = req.body;
+    try {
+      const response = await ShipperService.createShipper(data);
+      res.status(response.httpCode).json(response);
+    } catch (error) {
+      next(error.message);
+    }
   }
 
 
-});
+}
 
-module.exports = router;
+module.exports = ShipperRoute;

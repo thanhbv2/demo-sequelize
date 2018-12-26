@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const app = express()
+const router = express.Router();
+const ShipperRoute = require('./shippers');
 
+app.use('/', ShipperRoute.getInstance().registerRoute(router));
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// router.get('/', function (req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
-module.exports = router;
+
+
+module.exports = app;
